@@ -63,14 +63,21 @@ router.get("/posts/:id/edit", async function(req, res) {
 });
 
 router.post("/posts/:id/edit", async function(req, res) {
-    console.log("Hello");
     const { id } = req.params;
     const { title, summary, content } = req.body;
     const query = `update posts set title = ?, summary = ?, body = ? where id = ?`;
     await db.query(query, [title, summary, content, id]);
 
     res.redirect("/posts");
-})
+});
+
+router.post("/posts/:id/delete", async function(req, res) {
+    const { id } = req.params;
+    const query = `delete from posts where id = ?`;
+    await db.query(query, [id]);
+
+    res.redirect("/posts");
+});
 
 
 module.exports = router;
